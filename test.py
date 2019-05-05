@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-from vector3d import vector
+from rotation import vector
 
 v = vector([1, 2, 3])
-dir = vector([1, 1, 0])
-vrot = v.rotate(dir, 60, True)
+dir = vector([1, 0, 0])
+vrot = v.rotate(dir, 0, True)
 vrot.show()
