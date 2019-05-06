@@ -27,22 +27,25 @@ class vector:
 		return self.comp[key]
 
 	def __mul__(self, x = 1):
-		return vector([c*x for c in self.comp])
+		return vector([c*x for c in self.comp], self.orig)
 	def __div__(self, x = 1):
-		return vector([c/x for c in self.comp])
+		return vector([c/x for c in self.comp], self.orig)
 	def __add__(self, m = [0, 0, 0]):
-		return vector([self[i]+m[i] for i in range(3)])
+		return vector([self[i]+m[i] for i in range(3)], self.orig)
 	def __sub__(self, m = [0, 0 ,0]):
 		l = self.dest
-		return vector([self[i]-m[i] for i in range(3)])
+		return vector([self[i]-m[i] for i in range(3)], self.orig)
 
 	def show(self):
 		print("[{} {} {}]".format(self[0], self[1], self[2]))
 		return self
 	
 	def unit(self):
-		return vector([c/self.norm for c in self.comp])
+		return vector([c/self.norm for c in self.comp], self.orig)
 
+	def angle(self, v):
+		return np.arccos(self.dot_product(v)/(self.norm*v.norm))
+	
 	def dot_product(self, v):
 		return sum(self[i]*v[i] for i in range(3))
 
@@ -82,7 +85,8 @@ class quaternion:
 
 def vector_rotate(self, dir: vector, angle, degrees = False):
 	th = angle*(np.pi/180) if degrees else angle
-	u = dir.unit()
+	delta = self.angle(dir)
+	u = dir.unit() if abs(delta) <= np.pi/2 else vector() - dir.unit()
 	p = quaternion(np.cos(th/2), u*np.sin(th/2))
 	q = quaternion(0, self)
 	
