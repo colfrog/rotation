@@ -40,9 +40,9 @@ class scene1(scene):
 
 class scene2(scene1):
 	def draw_3D_rotation(self, v: vector, angleX, angleY, angleZ):
-		Vrot = (v.rotate(self.xunit(v), angleX, True) \
+		Vrot = v.rotate(self.xunit(v), angleX, True) \
 			.rotate(self.yunit(v), angleY, True) \
-			.rotate(self.zunit(v), angleZ, True)) / 3
+			.rotate(self.zunit(v), angleZ, True)
 		self.ax.collections.remove(self.Q)
 		self.Q = self.quiver(Vrot)
 		self.fig.canvas.draw()
