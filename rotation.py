@@ -22,7 +22,10 @@ class vector:
 		self.dest = point(dest)
 		self.comp = point([dest[i] - orig[i] for i in range(3)])
 		self.norm = np.sqrt(sum(c**2 for c in self.comp))
-		
+
+	def __iter__(self):
+		return iter(self.comp)
+
 	def __getitem__(self, key):
 		return self.comp[key]
 
@@ -33,19 +36,18 @@ class vector:
 	def __add__(self, m = [0, 0, 0]):
 		return vector([self[i]+m[i] for i in range(3)], self.orig)
 	def __sub__(self, m = [0, 0 ,0]):
-		l = self.dest
 		return vector([self[i]-m[i] for i in range(3)], self.orig)
 
 	def show(self):
 		print("[{} {} {}]".format(self[0], self[1], self[2]))
 		return self
-	
+
 	def unit(self):
 		return vector([c/self.norm for c in self.comp], self.orig)
 
 	def angle(self, v):
 		return np.arccos(self.dot_product(v)/(self.norm*v.norm))
-	
+
 	def dot_product(self, v):
 		return sum(self[i]*v[i] for i in range(3))
 
@@ -58,11 +60,18 @@ class vector:
 	def projection(self, v):
 		return v*(self.dot_product(v)/(v.norm**2))
 
+	def rotate(self, dir, angle, degrees = True):
+		th = angle*(np.pi/180) if degrees else angle
+		u = dir.unit()
+		p = quaternion(np.cos(th/2), u*np.sin(th/2))
+		q = quaternion(0, self)
+		return (p*q*p.inverse()).imag
+
 class quaternion:
 	def __init__(self, a = 0, v: vector = vector()):
 		self.real = a
 		self.imag = v
-	
+
 	def __mul__(self, q):
 		a, u = self.real, self.imag
 		b, v = q.real, q.imag
@@ -82,14 +91,3 @@ class quaternion:
 
 	def inverse(self):
 		return quaternion(self.real, vector() - self.imag)
-
-def vector_rotate(self, dir: vector, angle, degrees = False):
-	th = angle*(np.pi/180) if degrees else angle
-	delta = self.angle(dir)
-	u = dir.unit() if abs(delta) <= np.pi/2 else vector() - dir.unit()
-	p = quaternion(np.cos(th/2), u*np.sin(th/2))
-	q = quaternion(0, self)
-	
-	return (p*q*p.inverse()).imag
-
-vector.rotate = vector_rotate
