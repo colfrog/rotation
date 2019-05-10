@@ -11,11 +11,11 @@ class scene:
 		plt.ion()
 
 	def xunit(self, v: vector):
-		return vector([1, 0, 0], v.orig)
+		return vector([1.0, 0, 0], v.orig)
 	def yunit(self, v: vector):
-		return vector([0, 1, 0], v.orig)
+		return vector([0, 1.0, 0], v.orig)
 	def zunit(self, v: vector):
-		return vector([0, 0, 1], v.orig)
+		return vector([0, 0, 1.0], v.orig)
 
 	def make_angle_slider(self):
 		return widgets.IntSlider(min = 0, max = 360, step = 1)
@@ -40,9 +40,9 @@ class scene1(scene):
 
 class scene2(scene1):
 	def draw_3D_rotation(self, v: vector, angleX, angleY, angleZ):
-		Vrot = v.rotate(self.xunit(v), angleX, True) \
-			.rotate(self.yunit(v), angleY, True) \
-			.rotate(self.zunit(v), angleZ, True)
+		Vrot = v.rotate(self.xunit(v), angleX) \
+			.rotate(self.yunit(v), angleY) \
+			.rotate(self.zunit(v), angleZ)
 		self.ax.collections.remove(self.Q)
 		self.Q = self.quiver(Vrot)
 		self.fig.canvas.draw()
