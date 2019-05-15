@@ -20,6 +20,8 @@ class scene:
 		self.fig = plt.figure()
 		self.ax = self.fig.add_subplot(111, projection = "3d", xlim = (-3, 3), ylim = (-3, 3), zlim = (-3, 3))
 
+		self.vangle = 0
+		self.dangle = 0
 		self.vi = self.v = v
 		self.di = self.d = d
 		self.Qv = self.quiver(v)
@@ -38,15 +40,17 @@ class scene:
 		return q
 	
 	def rotate_vector(self, angle_vecteur):
-		angle = angle_vecteur
-		self.v = self.vi.rotate(self.d, angle, True)
+		self.vangle = angle_vecteur
+		self.v = self.vi.rotate(self.d, self.vangle, True)
 		self.ax.collections.remove(self.Qv)
 		self.Qv = self.quiver(self.v)
 		self.fig.canvas.draw()
 
 	def rotate_dir(self, d, angle_direction):
-		angle = angle_direction
-		self.d = self.di.rotate(d, angle, True)
+		self.dangle = angle_direction
+		self.d = self.di.rotate(d, self.dangle, True)
+		
+		self.vi = self.v.rotate(d, -self.vangle, True)
 		self.ax.collections.remove(self.Qd)
 		self.Qd = self.quiver(self.d, "green")
 		self.fig.canvas.draw()
