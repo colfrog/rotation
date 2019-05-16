@@ -50,7 +50,7 @@ class scene:
 		self.dangle = angle_direction
 		self.d = self.di.rotate(d, self.dangle, True)
 		
-		self.vi = self.v.rotate(d, -self.vangle, True)
+		self.vi = self.v.rotate(self.d, -self.vangle, True)
 		self.ax.collections.remove(self.Qd)
 		self.Qd = self.quiver(self.d, "green")
 		self.fig.canvas.draw()
