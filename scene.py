@@ -49,17 +49,7 @@ class scene:
 	def rotate_dir(self, d, angle_direction):
 		self.dangle = angle_direction
 		self.d = self.di.rotate(d, self.dangle, True)
-		
 		self.vi = self.v.rotate(self.d, -self.vangle, True)
 		self.ax.collections.remove(self.Qd)
 		self.Qd = self.quiver(self.d, "green")
 		self.fig.canvas.draw()
-
-#class scene3(scene1):
-#	def draw_3D_rotation(self, v: vector, angleX, angleY, angleZ):
-#		Vrot = v.rotate(self.xunit(v), angleX) \
-#			.rotate(self.yunit(v), angleY) \
-#			.rotate(self.zunit(v), angleZ)
-#		self.ax.collections.remove(self.Q)
-#		self.Q = self.quiver(Vrot)
-#		self.fig.canvas.draw()
