@@ -53,3 +53,12 @@ class scene:
 		self.ax.collections.remove(self.Qd)
 		self.Qd = self.quiver(self.d, "green")
 		self.fig.canvas.draw()
+
+	def rotate_3D(self, angleX, angleY, angleZ):
+		self.vangle = 0
+		self.v = self.vi.rotate(xunit(self.v), angleX, True) \
+			.rotate(yunit(self.v), angleY, True) \
+			.rotate(zunit(self.v), angleZ, True)
+		self.ax.collections.remove(self.Qv)
+		self.Qv = self.quiver(self.v)
+		self.fig.canvas.draw()
