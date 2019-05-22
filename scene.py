@@ -26,7 +26,11 @@ class scene:
 		self.di = self.d = d
 		self.Qv = self.quiver(v)
 		self.Qd = self.quiver(d, "green")
-		
+
+		self.xu = xunit(self.v)
+		self.yu = yunit(self.v)
+		self.zu = zunit(self.v)
+
 		plt.ion()
 		plt.show()
 
@@ -56,9 +60,9 @@ class scene:
 
 	def rotate_3D(self, angleX, angleY, angleZ):
 		self.vangle = 0
-		self.v = self.vi.rotate(xunit(self.v), angleX, True) \
-			.rotate(yunit(self.v), angleY, True) \
-			.rotate(zunit(self.v), angleZ, True)
+		self.v = self.vi.rotate(self.xu, angleX, True) \
+			.rotate(self.yu, angleY, True) \
+			.rotate(self.zu, angleZ, True)
 		self.ax.collections.remove(self.Qv)
 		self.Qv = self.quiver(self.v)
 		self.fig.canvas.draw()
