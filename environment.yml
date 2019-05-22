@@ -1,0 +1,7 @@
+name: rotation-environment
+channels:
+  - colfrog
+dependencies:
+  - python
+  - numpy
+  - matplotlib
